@@ -1,11 +1,11 @@
 # bus-trackingsystem-backend-
 REST API for bus tracking system for amrita college bengaluru
 
-#Prerequisite
+# Prerequisite
 
 ```bash
->Node.js
->npm
+> Node.js
+> npm
 
 ```
 
