@@ -3,11 +3,24 @@ const app = express();
 const bodyParser=require("body-parser");
 const methodOverride = require("method-override");
 const db= require("./config/database");
+const session = require('express-session')
+
+app.use(session({
+    name:'sid',
+    saveUninitialized:false,
+    resave:false,
+    secret:'its a secret,sorry',
+    cookie:{
+        maxAge: 300000, //ms
+        sameSite: true,
+        secure: process.env.NODE_ENV === 'production' 
+    }
+}))
 
 
 //requiring routes
 var indexRoutes      = require("./routes/index");
-var student      = require("./routes/student");
+var security     = require("./routes/security");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.set("view engine", "ejs");
@@ -28,7 +41,7 @@ app.use((req,res,next) => {
 
 
 app.use("/ind", indexRoutes);
-app.use("/student",student);
+app.use("/security",security);
 
 
 

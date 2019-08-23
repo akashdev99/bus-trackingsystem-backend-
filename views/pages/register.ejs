@@ -1,0 +1,39 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <h5 class="card-title text-center">Register</h5>
+            <form class="form-signin" action="/security/signin" method="post">
+              <div class="form-label-group">
+                <input type="text" id="inputEmail" class="form-control" placeholder="ID" required autofocus name="id">
+                <label for="inputEmail">ID</label>
+              </div>
+              <div class="form-label-group">
+                <input type="text"   id="inputname" class="form-control" placeholder="Name" required  name="name">
+                <label for="inputname">Name</label>
+              </div>
+
+               <div class="form-label-group">
+                <input type="text" id="inputPos" class="form-control" placeholder="Position" required autofocus name="position">
+                <label for="inputPos">Position</label>
+              </div> 
+
+              <div class="form-label-group">
+                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required name="password">
+                <label for="inputPassword">Password</label>
+              </div>
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Register</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+<% include ../partials/footer%>
