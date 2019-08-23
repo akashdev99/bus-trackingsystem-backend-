@@ -19,7 +19,7 @@ app.use(session({
 
 
 //requiring routes
-var indexRoutes      = require("./routes/index");
+
 var security     = require("./routes/security");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -40,7 +40,7 @@ app.use((req,res,next) => {
 })
 
 
-app.use("/ind", indexRoutes);
+
 app.use("/security",security);
 
 
