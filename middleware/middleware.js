@@ -31,4 +31,3 @@ module.exports = {
   redirectHome:redirectHome
 }
 
-//https://medium.com/@maison.moa/using-jwt-json-web-tokens-to-authorize-users-and-protect-api-routes-3e04a1453c3e

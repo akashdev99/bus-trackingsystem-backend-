@@ -22,7 +22,7 @@ router.post("/signin",function(req,res){
     .then(function(snapshot){
         if(snapshot.hasChild(id)){
             
-            res.render("pages/register");
+            res.render("pages/register",{user:null});
         }
         else{
             var newref=db.ref("security/"+id);
@@ -31,7 +31,7 @@ router.post("/signin",function(req,res){
            idf: id,
            posf: pos,
            passwordf:password
-     }).then(res.render("pages/login"));            
+     }).then(res.render("pages/login",{user:null}));            
         }
     })
 
@@ -53,17 +53,23 @@ router.post('/login',function(req,res){
     ref.child(id).once('value', function(snapshot) {
         // var exists = (snapshot.val() !== null);
         useref=snapshot.val();
-        if (password==useref.passwordf){
+        if(useref!=null)
+        {if (password==useref.passwordf){
           
-            // jwt.sign({useref},config.secret,{expiresIn:'360s'},function(err,token){  
-            // });
+          // jwt.sign({useref},config.secret,{expiresIn:'360s'},function(err,token){  
+          // });
 
-            req.session.userID=id;
-            return res.redirect('/security/dashboard');
-        }else {
-          console.log("fail");
-          res.render("pages/login");     
-        }
+          req.session.userID=id;
+          return res.redirect('/security/dashboard');
+      }else {
+        console.log("fail");
+        res.render("pages/login",{user:null});     
+      }}
+      else{
+        console.log("server issue");
+        res.render("pages/signin",{user:null}); 
+      }
+        
       });
 });
 
@@ -83,15 +89,46 @@ router.get('/logout',function(req,res){
   })
 });
 
+router.get('/makebus',(req,res)=>{
+  var ref = db.ref("buses/");
+  var buses=["BUS-101","BUS-102","BUS-103","BUS-104","BUS-107","BUS-108","BUS-109","BUS-110","BUS-111"]
+  buses.forEach((busid)=>{
+    var newref=db.ref("buses/"+busid);
+    newref.set ({   
+    namef:"the cool bus",
+    idf: busid,
+    regionf: "chicken street",
+    latf: "10.12",
+    longf: "11.22",
+
+  }).then(res.render("pages/login",{user:null}));
+  })
+
+   
+})
+
 
 //protected route
 router.get('/dashboard', middleware.checkauth, (req, res) => {  
+  var buses=[]
   const data=res.locals.user;
+  var ref = db.ref("buses/");
+  ref.once('value', function(snapshot){
+    snapshot.forEach(function(_child){
+        buses.push(_child.key);
+
+        })
+        data.bus=buses;
+        console.log(data);
+        res.render('pages/dashboard',{user:data});})
+        
   // { idf: 'SEC16089',
   // namef: 'Akash',
   // passwordf: 'qwertyuiop',
   // posf: 'chief' }
-  res.render('pages/dashboard',{user:data});
+  
+  
+  
   });
 
 
