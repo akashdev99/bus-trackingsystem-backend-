@@ -1,0 +1,50 @@
+<% include ../partials/header %>
+<% include ../partials/sidepanel %>
+
+<!--The div element for the map -->
+
+<div id="map"></div>
+
+
+
+
+<script>
+    // Initialize and add the map
+    function initMap() {
+
+        // The location of Uluru
+        var uluru = { lat: <%=user.latf %>, lng: <%=user.longf %>};
+        // The map, centered at Uluru
+        var map = new google.maps.Map(
+            document.getElementById('map'), { zoom: 17, center: uluru });
+        // The marker, positioned at Uluru
+        var marker = new google.maps.Marker({ position: uluru, map: map });
+
+        var trafficLayer = new google.maps.TrafficLayer();
+        trafficLayer.setMap(map);
+    }
+    
+
+
+
+</script>
+
+
+
+
+
+
+
+
+</div>
+<!--/row-->
+
+</div>
+<!--/main col-->
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuyzG7oqnx-MsVw6pFfeomQw2Nc185qZ0&callback=initMap">
+    </script>
+
+
+<% include ../partials/footer%>
+<% include ../partials/footer%>

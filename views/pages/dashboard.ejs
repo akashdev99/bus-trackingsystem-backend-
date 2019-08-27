@@ -1,18 +1,6 @@
 <% include ../partials/header %>
+<% include ../partials/sidepanel %>
 
-<div class="container-fluid" id="main">
-    <div class="row row-offcanvas row-offcanvas-left">
-        <div class="col-md-3 col-lg-2 sidebar-offcanvas  pl-0" id="sidebar" role="navigation" 
-        style="background-color:#6200EE;
-                height:900px;
-                "
-        >
-            <ul class="nav flex-column sticky-top pl-0 pt-4 mt-0" >
-                <center><li class="nav-item"><a class="nav-link side-link" href="#">Overview</a></li></center>
-                <center><li class="nav-item"><a class="nav-link side-link" href="#">Info</a></li></center>
-            </ul>
-        </div>
-        <!--/col-->
 
         <div class="col main pt-5 mt-3">
             <h1 class="display-4 d-none d-sm-block ">
@@ -26,7 +14,7 @@
                 <% if(i%4==0||i==0){%> <div class="row mb-3 "> <%}%>
 
                 <div class="col-xl-3 col-sm-6 py-2" >
-                    <div class="card bg-info text-white h-100">
+                    <a style="text-decoration: none" href="/security/dashboard/<%=user.bus[i]%>"><div class="card bg-info text-white h-100">
                         <div class="card-body bg-info">
                             <div class="rotate">
                                 <i class="fa fa-user fa-4x"></i>
@@ -34,7 +22,7 @@
                             <h6 class="text-uppercase">Bus</h6>
                             <h1 class="display-4"><%=user.bus[i]%></h1>
                         </div>
-                    </div>
+                    </div></a>
                 </div>
                 <% if((i+1)%4 ==0||user.bus[i+1]==null){%></div> <%}%>
                 <%}%>
@@ -43,57 +31,12 @@
                 
             </div>
             <!--/row-->
-
-            
-           
-
-            
-            <!--/row-->
-
-            
-            
-            <!--/card-columns-->
-
-            
-                
-              
-                
-                
+            <!--/card-columns-->            
             </div><!--/row-->
 
         </div>
         <!--/main col-->
-    </div>
-
-</div>
-<!--/.container-->
 
 
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Modal</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                    <span class="sr-only">Close</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>This is a dashboard layout for Bootstrap 4. This is an example of the Modal component which you can use to show content.
-                Any content can be placed inside the modal and it can use the Bootstrap grid classes.</p>
-                <p>
-                    <a href="https://www.codeply.com/go/KrUO8QpyXP" target="_ext">Grab the code at Codeply</a>
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary-outline" data-dismiss="modal">OK</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <% include ../partials/footer%>

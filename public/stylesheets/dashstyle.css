@@ -50,6 +50,11 @@ body, html {
       height: 100%;
     }
   }
+
+#map{
+  height: 900px;
+  width:83%;
+}
   
   /*
    * Off Canvas wider at sm breakpoint

@@ -9,6 +9,26 @@ router.get('/none',function(req,res){
   const {userId}=req.session;
   console.log(req.session);
 })
+
+//dummy data
+router.get('/makebus',(req,res)=>{
+  var ref = db.ref("buses/");
+  var buses=["BUS-101","BUS-102","BUS-103","BUS-104","BUS-105","BUS-106","BUS-107"]
+  buses.forEach((busid)=>{
+    var newref=db.ref("buses/"+busid);
+    newref.set ({   
+    namef:"the cool bus",
+    idf: busid,
+    regionf: "chicken street",
+    latf: "12.8914774",
+    longf: "77.6762883",
+
+  }).then(res.render("pages/login",{user:null}));
+  })
+
+   
+})
+
 //register
 router.post("/signin",function(req,res){
     var name=req.body.name;
@@ -89,23 +109,7 @@ router.get('/logout',function(req,res){
   })
 });
 
-router.get('/makebus',(req,res)=>{
-  var ref = db.ref("buses/");
-  var buses=["BUS-101","BUS-102"]
-  buses.forEach((busid)=>{
-    var newref=db.ref("buses/"+busid);
-    newref.set ({   
-    namef:"the cool bus",
-    idf: busid,
-    regionf: "chicken street",
-    latf: "10.12",
-    longf: "11.22",
 
-  }).then(res.render("pages/login",{user:null}));
-  })
-
-   
-})
 
 
 //protected route
@@ -119,7 +123,6 @@ router.get('/dashboard', middleware.checkauth, (req, res) => {
 
         })
         data.bus=buses;
-        console.log(data);
         res.render('pages/dashboard',{user:data});})
         
   // { idf: 'SEC16089',
@@ -127,10 +130,18 @@ router.get('/dashboard', middleware.checkauth, (req, res) => {
   // passwordf: 'qwertyuiop',
   // posf: 'chief',
 // buseS:["BUS101", }
-  
-  
-  
   });
+
+router.get("/dashboard/:id", middleware.checkauth,(req,res)=>{
+  id=req.params.id;
+  var ref = db.ref("buses/"+id+"/");
+  ref.once('value',(snapshot)=>{
+    data=snapshot.val();
+    res.render('pages/tracker',{user:data});
+    })
+  })
+
+
 
 
   
