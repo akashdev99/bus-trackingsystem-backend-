@@ -50,30 +50,7 @@ app.use((req,res,next) =>{
     error.status=404;
     next(error);
 })  
-// app.use((error,req,res,next) =>{
-//     res.status(error.status || 500);
-//     res.json({
-//         error:{
-//             message:error.message
-//         }
-//     })
-// }) 
-// var ref = db.ref("restricted_access/sec_document");
-// ref.once("value", function(snapshot) {
-//   console.log(snapshot.val());
-// });
 
-// var usersRef = ref.child("users");
-// usersRef.set({
-//   alanisawesome: {
-//     date_of_birth: "June 23, 1912",
-//     full_name: "Alan Turing"
-//   },
-//   gracehop: {
-//     date_of_birth: "December 9, 1906",
-//     full_name: "Grace Hopper"
-//   }
-// });
 
 app.listen(9000, process.env.IP, function(){
     console.log("The Bustracker Server Has Started!");

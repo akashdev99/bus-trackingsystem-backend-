@@ -15,7 +15,7 @@ router.post("/signin",function(req,res){
     var id=req.body.id;
     var pos=req.body.position;
     var password=req.body.password;
-
+db.r
 //firebase wite
     var ref = db.ref("security/");
     ref.once("value")
@@ -91,7 +91,7 @@ router.get('/logout',function(req,res){
 
 router.get('/makebus',(req,res)=>{
   var ref = db.ref("buses/");
-  var buses=["BUS-101","BUS-102","BUS-103","BUS-104","BUS-107","BUS-108","BUS-109","BUS-110","BUS-111"]
+  var buses=["BUS-101","BUS-102"]
   buses.forEach((busid)=>{
     var newref=db.ref("buses/"+busid);
     newref.set ({   
@@ -125,7 +125,8 @@ router.get('/dashboard', middleware.checkauth, (req, res) => {
   // { idf: 'SEC16089',
   // namef: 'Akash',
   // passwordf: 'qwertyuiop',
-  // posf: 'chief' }
+  // posf: 'chief',
+// buseS:["BUS101", }
   
   
   
