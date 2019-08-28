@@ -4,7 +4,8 @@ const bodyParser=require("body-parser");
 const methodOverride = require("method-override");
 const db= require("./config/database");
 const session = require('express-session')
-
+const flash = require('express-flash-notification');
+//to do flash notification
 app.use(session({
     name:'sid',
     saveUninitialized:false,
@@ -18,8 +19,9 @@ app.use(session({
 }))
 
 
-//requiring routes
 
+//requiring routes
+app.use(flash(app));
 var security     = require("./routes/security");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -42,7 +44,9 @@ app.use((req,res,next) => {
 
 
 app.use("/security",security);
-
+app.get("*",(req,res)=>{
+    res.render("pages/error",{user:null});
+});
 
 
 app.use((req,res,next) =>{

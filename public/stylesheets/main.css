@@ -10,6 +10,10 @@
     
 
   }
+
+  #error{
+    padding-top: 21px;
+  }
   
   .card-signin {
     border: 0;

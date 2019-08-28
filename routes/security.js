@@ -132,7 +132,7 @@ router.get('/dashboard', middleware.checkauth, (req, res) => {
 // buseS:["BUS101", }
   });
 
-router.get("/dashboard/:id", middleware.checkauth,(req,res)=>{
+router.get("/dashboard/:id",middleware.checkauth,(req,res)=>{
   id=req.params.id;
   var ref = db.ref("buses/"+id+"/");
   ref.once('value',(snapshot)=>{
@@ -140,6 +140,7 @@ router.get("/dashboard/:id", middleware.checkauth,(req,res)=>{
     res.render('pages/tracker',{user:data});
     })
   })
+
 
 
 

@@ -55,7 +55,11 @@ body, html {
   height: 900px;
   width:83%;
 }
-  
+ 
+#error-word{
+  font-size:12px;
+}
+
   /*
    * Off Canvas wider at sm breakpoint
    * --------------------------------------------------
