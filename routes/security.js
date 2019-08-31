@@ -126,7 +126,10 @@ router.get('/dashboard', middleware.checkauth, (req, res) => {
         data.bus=buses;
         data.location=location;
         res.render('pages/dashboard',{user:data});})
+
         
+    
+
   // { idf: 'SEC16089',
   // namef: 'Akash',
   // passwordf: 'qwertyuiop',
