@@ -4,14 +4,9 @@
 <!--The div element for the map -->
 
 <div id="map"></div>
-
-
-
-
 <script>
     // Initialize and add the map
     function initMap() {
-
         // The location of Uluru
         var uluru = { lat: <%=user.latf %>, lng: <%=user.longf %>};
         // The map, centered at Uluru
@@ -19,22 +14,10 @@
             document.getElementById('map'), { zoom: 17, center: uluru });
         // The marker, positioned at Uluru
         var marker = new google.maps.Marker({ position: uluru, map: map });
-
         var trafficLayer = new google.maps.TrafficLayer();
         trafficLayer.setMap(map);
     }
-    
-
-
-
 </script>
-
-
-
-
-
-
-
 
 </div>
 <!--/row-->
@@ -44,6 +27,4 @@
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuyzG7oqnx-MsVw6pFfeomQw2Nc185qZ0&callback=initMap">
     </script>
-
-
-<% include ../partials/header %>
+<% include ../partials/footer %>

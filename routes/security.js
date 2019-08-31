@@ -115,14 +115,16 @@ router.get('/logout',function(req,res){
 //protected route
 router.get('/dashboard', middleware.checkauth, (req, res) => {  
   var buses=[]
+  var location=[]
   const data=res.locals.user;
   var ref = db.ref("buses/");
   ref.once('value', function(snapshot){
     snapshot.forEach(function(_child){
-        buses.push(_child.key);
-
+        buses.push(_child.key)
+        location.push(_child.val().regionf);
         })
         data.bus=buses;
+        data.location=location;
         res.render('pages/dashboard',{user:data});})
         
   // { idf: 'SEC16089',
@@ -142,6 +144,7 @@ router.get("/dashboard/:id",middleware.checkauth,(req,res)=>{
   })
 
 
+  
 
 
 
