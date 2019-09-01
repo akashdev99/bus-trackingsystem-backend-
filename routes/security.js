@@ -161,12 +161,12 @@ router.get("/analytics", middleware.checkauth,(req,res)=>{
   })
 
 //analytics info
-router.get("/dashboard/:id",middleware.checkauth,(req,res)=>{
+router.get("/analytics/:id",middleware.checkauth,(req,res)=>{
   id=req.params.id;
   var ref = db.ref("buses/"+id+"/");
   ref.once('value',(snapshot)=>{
     data=snapshot.val();
-    res.render('pages/tracker',{user:data});
+    res.render('pages/analytics',{user:data});
     })
   })
 
