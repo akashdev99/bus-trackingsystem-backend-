@@ -3,7 +3,7 @@
 
 <div class="col main pt-5 mt-3">
     <h1 class="display-4 d-none d-sm-block ">
-    Bustracker Dashboard
+    Analytics
     </h1>
     <p class="lead d-none d-sm-block">Welcome <%=user.namef%>,Let's Analyze!</p>
 
@@ -36,15 +36,19 @@
               <th>Destination</th>
               <!--<th>Status</th>-->
               <th>Last Seen</th>
+              <th>Status</th>
               <!--<th>Estimated Arrival</th>-->
 
             </tr>
+            <%for (i = 0; i <user.bus.length ; i++){%>
             <tr>
-              <td>BUS-101</td>
-              <td>Marthahalli</td>
+              <td><%=user.bus[i]%></td>
+              <td><%=user.location[i]%></td>
               <td>Amrita School of Engineering</td>
               <td>8:55pm</td>
+              <td>Not Reached</td>
             </tr>
+            <%}%>
             
           </table>
 

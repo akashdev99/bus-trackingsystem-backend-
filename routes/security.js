@@ -3,8 +3,6 @@ const jwt = require('jsonwebtoken');
 var router  = express.Router();
 const db= require("../config/database");
 const middleware = require("../middleware/middleware");
-var distance = require('google-distance-matrix');
-distance.key('AIzaSyBx_oDKnC6r-5CrS4IEH4Uu0PQ4Ifdn3hc');
 
 
 router.get('/none',function(req,res){
@@ -168,6 +166,23 @@ router.get("/analytics/:id",middleware.checkauth,(req,res)=>{
     data=snapshot.val();
     res.render('pages/analytics',{user:data});
     })
+  })
+
+//messages
+
+router.get("/messages", middleware.checkauth,(req,res)=>{
+  var buses=[]
+  var location=[]
+  const data=res.locals.user;
+  var ref = db.ref("buses/");
+  ref.once('value', function(snapshot){
+    snapshot.forEach(function(_child){
+        buses.push(_child.key)
+        location.push(_child.val().regionf);
+        })
+        data.bus=buses;
+        data.location=location;
+        res.render('pages/message',{user:data});})
   })
 
 
