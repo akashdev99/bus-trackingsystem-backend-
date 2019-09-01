@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken');
 var router  = express.Router();
 const db= require("../config/database");
 const middleware = require("../middleware/middleware");
+var distance = require('google-distance-matrix');
+distance.key('AIzaSyBx_oDKnC6r-5CrS4IEH4Uu0PQ4Ifdn3hc');
 
 
 router.get('/none',function(req,res){
@@ -127,16 +129,38 @@ router.get('/dashboard', middleware.checkauth, (req, res) => {
         data.location=location;
         res.render('pages/dashboard',{user:data});})
 
-        
-    
-
-  // { idf: 'SEC16089',
-  // namef: 'Akash',
-  // passwordf: 'qwertyuiop',
-  // posf: 'chief',
-// buseS:["BUS101", }
   });
 
+
+//map
+  router.get("/dashboard/:id",middleware.checkauth,(req,res)=>{
+    id=req.params.id;
+    var ref = db.ref("buses/"+id+"/");
+    ref.once('value',(snapshot)=>{
+      data=snapshot.val();
+      res.render('pages/tracker',{user:data});
+      })
+    })
+
+
+//analytics
+
+router.get("/analytics", middleware.checkauth,(req,res)=>{
+  var buses=[]
+  var location=[]
+  const data=res.locals.user;
+  var ref = db.ref("buses/");
+  ref.once('value', function(snapshot){
+    snapshot.forEach(function(_child){
+        buses.push(_child.key)
+        location.push(_child.val().regionf);
+        })
+        data.bus=buses;
+        data.location=location;
+        res.render('pages/analytics',{user:data});})
+  })
+
+//analytics info
 router.get("/dashboard/:id",middleware.checkauth,(req,res)=>{
   id=req.params.id;
   var ref = db.ref("buses/"+id+"/");
@@ -145,6 +169,9 @@ router.get("/dashboard/:id",middleware.checkauth,(req,res)=>{
     res.render('pages/tracker',{user:data});
     })
   })
+
+
+
 
 
   
