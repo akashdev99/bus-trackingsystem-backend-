@@ -14,6 +14,6 @@ REST API for bus tracking system for amrita college bengaluru
 # Install dependencies
 npm install
 
-# Serve on localhost:3=9000
+# Serve on localhost 9000
 npm start
 ```
