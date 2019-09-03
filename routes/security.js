@@ -214,12 +214,13 @@ router.get("/messages", middleware.checkauth,(req,res)=>{
   });
 
   //analytics info
-router.get("/analytics/:id",middleware.checkauth,(req,res)=>{
+router.get("/message/:id",middleware.checkauth,(req,res)=>{
   id=req.params.id;
-  var ref = db.ref("buses/"+id+"/");
+  var ref = db.ref("messages/"+id+"/");
   ref.once('value',(snapshot)=>{
     data=snapshot.val();
-    res.render('pages/analytics',{user:data});
+    console.log(data);
+    res.render('pages/convo',{user:data});
     })
   })
 
