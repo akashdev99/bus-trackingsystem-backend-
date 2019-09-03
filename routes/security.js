@@ -13,7 +13,7 @@ router.get('/none',function(req,res){
 //dummy data
 router.get('/makebus',(req,res)=>{
   var ref = db.ref("buses/");
-  var buses=["BUS-101","BUS-102","BUS-103","BUS-104","BUS-105","BUS-106","BUS-107"]
+  var buses=["BUS-102","BUS-103","BUS-104","BUS-105","BUS-106","BUS-107"]
   buses.forEach((busid)=>{
     var newref=db.ref("buses/"+busid);
     newref.set ({   
@@ -168,21 +168,49 @@ router.get("/analytics/:id",middleware.checkauth,(req,res)=>{
     })
   })
 
+//Add messages
+router.get("/makemessages",(req,res)=>{
+  var buses=["BUS-101","BUS-102","BUS-103"]
+  var priority=["low","high","low"]
+  var message=["There is a huge traffic block,might take a bit of time","The tire has punctured ,please send someone!!!","Traffic Block"]
+  var i=0;
+  var date=new Date();
+  buses.forEach((busid)=>{
+    var newref=db.ref("messages/"+busid);
+    newref.set ({   
+    idf: busid,
+    priority: priority[i],
+    message: message[i],
+    time: date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
+  }).then(i=i+1)})});
+
+
+
 //messages
 
 router.get("/messages", middleware.checkauth,(req,res)=>{
   var buses=[]
-  var location=[]
+  var priority=[]
+  var time=[]
   const data=res.locals.user;
-  var ref = db.ref("buses/");
+  var ref = db.ref("messages/");
   ref.once('value', function(snapshot){
     snapshot.forEach(function(_child){
         buses.push(_child.key)
-        location.push(_child.val().regionf);
+        priority.push(_child.val().priority);
+        time.push(_child.val().time);
         })
         data.bus=buses;
-        data.location=location;
+        data.priority=priority;
+        data.time=time;
         res.render('pages/message',{user:data});})
+  //       { idf: 'SEC16089',
+  // namef: 'gaithonde',
+  // passwordf: 'qwertyuiop',
+  // posf: 'chief',
+  // bus: [ 'BUS-101', 'BUS-102', 'BUS-103' ],
+  // priority: [ 'low', 'high', 'low' ],
+  // time: [ '22:36:26', '22:36:26', '22:36:26' ] }
   })
 
 

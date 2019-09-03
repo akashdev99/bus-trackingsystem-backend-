@@ -5,10 +5,13 @@
     <h1 class="display-4 d-none d-sm-block ">
     Messages 
     </h1>
+    <%if(user.bus.length==0){ %>
     <p class="lead d-none d-sm-block">No notification,Everything is fine!</p>
+    <%}else{%>
+        <p class="lead d-none d-sm-block">Transport Issue Found!</p>
+        
 
-
-
+    <% } %>
 </div>
 </div>
 <!--/row-->
