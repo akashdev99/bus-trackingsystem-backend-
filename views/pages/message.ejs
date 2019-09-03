@@ -9,7 +9,23 @@
     <p class="lead d-none d-sm-block">No notification,Everything is fine!</p>
     <%}else{%>
         <p class="lead d-none d-sm-block">Transport Issue Found!</p>
-        
+        <%for (i = 0; i <user.bus.length ; i++){%>
+            <% if(i%4==0||i==0){%> <div class="row mb-3 "> <%}%>
+            <%if(user.priority[i]=='low'){var color="bg-success"} else{var color="bg-danger"}%>
+            <div class="col-xl-3 col-sm-6 py-2" >
+                <a style="text-decoration: none" href="/security/message/<%=user.bus[i]%>"><div class="card <%=color %>  text-white h-100">
+                    <div class="card-body <%=color %>">
+                        <div class="rotate">
+                            <i class="fa fa-commenting-o fa-4x"></i>
+                        </div>
+                        <h6 class="text-uppercase"><%=user.time[i] %></h6>
+                        <h1 class="display-4"><%=user.bus[i]%></h1>
+                    </div>
+                </div></a>
+            </div>
+            <% if((i+1)%4 ==0||user.bus[i+1]==null){%></div> <%}%>
+            <%}%>
+            
 
     <% } %>
 </div>

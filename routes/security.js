@@ -211,6 +211,16 @@ router.get("/messages", middleware.checkauth,(req,res)=>{
   // bus: [ 'BUS-101', 'BUS-102', 'BUS-103' ],
   // priority: [ 'low', 'high', 'low' ],
   // time: [ '22:36:26', '22:36:26', '22:36:26' ] }
+  });
+
+  //analytics info
+router.get("/analytics/:id",middleware.checkauth,(req,res)=>{
+  id=req.params.id;
+  var ref = db.ref("buses/"+id+"/");
+  ref.once('value',(snapshot)=>{
+    data=snapshot.val();
+    res.render('pages/analytics',{user:data});
+    })
   })
 
 
