@@ -19,7 +19,7 @@ router.get('/makebus',(req,res)=>{
     newref.set ({   
     namef:"the cool bus",
     idf: busid,
-    regionf: "chicken street",
+    regionf: "Marthahalli ,Bengaluru ",
     latf: "12.8914774",
     longf: "77.6762883",
 
