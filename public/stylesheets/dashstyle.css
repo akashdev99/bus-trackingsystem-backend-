@@ -78,6 +78,17 @@ span.centerit{
 #error-word{
   font-size:12px;
 }
+.contain{
+  margin:12px 42px 0px 14px;
+  width:79%
+}
+.bubble{
+  width:103%;
+  padding:4px 1px 4px 19px;
+  border-radius:9px;
+  box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(10, 1, 12, 0.4);
+  background-color: #dddddd;
+}
 
   /*
    * Off Canvas wider at sm breakpoint
