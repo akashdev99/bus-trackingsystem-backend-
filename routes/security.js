@@ -54,7 +54,6 @@ db.r
      }).then(res.render("pages/login",{user:null}));            
         }
     })
-
 });
 
 //render register
@@ -65,7 +64,6 @@ router.get('/signin',middleware.redirectHome,function(req,res){
 
 //login
 router.post('/login',function(req,res){
-
     var id=req.body.id;
     var password=req.body.password;
     //checking for user
@@ -88,8 +86,7 @@ router.post('/login',function(req,res){
       else{
         console.log("server issue");
         res.render("pages/signin",{user:null}); 
-      }
-        
+      }       
       });
 });
 
