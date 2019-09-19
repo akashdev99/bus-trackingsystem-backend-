@@ -210,7 +210,7 @@ router.get("/messages", middleware.checkauth,(req,res)=>{
   // time: [ '22:36:26', '22:36:26', '22:36:26' ] }
   });
 
-  //analytics info
+//messages
 router.get("/message/:id",middleware.checkauth,(req,res)=>{
   id=req.params.id;
   var ref = db.ref("messages/"+id+"/");
@@ -220,6 +220,14 @@ router.get("/message/:id",middleware.checkauth,(req,res)=>{
     res.render('pages/convo',{user:data});
     })
   })
+
+router.get("/close/:id",middleware.checkauth,(req,res)=>{
+  console.log("here")
+  id=req.params.id;
+  var ref = db.ref("messages/");
+  ref.child(id).remove().then(res.redirect('/security/dashboard'));
+});
+
 
 
 
