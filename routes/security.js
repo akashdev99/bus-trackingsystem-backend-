@@ -58,16 +58,23 @@ db.r
 
 //render register
 router.get('/signin',middleware.redirectHome,function(req,res){
-  res.render('pages/register',{user:null});
+  var data=new Object();
+  data.error=null;
+  data.idf=null;
+  res.render('pages/register',{user:data});
 })
 
 
 //login
 router.post('/login',function(req,res){
     var id=req.body.id;
+    var data=new Object();
+    data.error=null;
+    data.idf=null;
     var password=req.body.password;
     //checking for user
     var ref = db.ref("security/");
+    //add error catch if user doesnt exist!!
     ref.child(id).once('value', function(snapshot) {
         // var exists = (snapshot.val() !== null);
         useref=snapshot.val();
@@ -81,18 +88,23 @@ router.post('/login',function(req,res){
           return res.redirect('/security/dashboard');
       }else {
         console.log("fail");
-        res.render("pages/login",{user:null});     
+        data.error="Sorry !! Your username or Password is wrong :( ,Please try again!"
+        res.render("pages/login",{user:data});     
       }}
       else{
         console.log("server issue");
-        res.render("pages/signin",{user:null}); 
+        data.error="Sorry !! Something is wrong on out end!"
+        res.render("pages/signin",{user:data}); 
       }       
       });
 });
 
 //render login
 router.get('/login',middleware.redirectHome,function(req,res){
-  res.render('pages/login',{user:null});
+  var data=new Object();
+  data.error=null;
+  data.idf=null;
+  res.render('pages/login',{user:data});
 });
 
 router.get('/logout',function(req,res){
@@ -114,6 +126,7 @@ router.get('/dashboard', middleware.checkauth, (req, res) => {
   var buses=[]
   var location=[]
   const data=res.locals.user;
+  console.log(data);
   var ref = db.ref("buses/");
   ref.once('value', function(snapshot){
     snapshot.forEach(function(_child){

@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <% if(user==null){%>
+        <% if(user.idf==null){%>
         <link rel="stylesheet" href="/stylesheets/main.css"> 
         <% } else {%>
         <link rel="stylesheet" href="/stylesheets/dashstyle.css"> 
@@ -21,7 +21,7 @@
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
-        <% if(user==null){%>
+        <% if(user.idf==null){%>
         <li class="nav-item active">
         <a class="nav-link" href="/security/login">Login</a>
         </li>
@@ -36,3 +36,8 @@
       </ul>
     </div>
   </nav>
+  <%if(user.error!=null){%>
+  <div class="alert alert-warning" role="alert">
+    <center><%=user.error%></center>
+  </div>
+  <% } %>
