@@ -2,6 +2,10 @@ var express = require("express");
 const jwt = require('jsonwebtoken');
 var router  = express.Router();
 const db= require("../config/database");
+
+var mongoUtil = require( '../config/mongo' );
+
+var dbs = mongoUtil.getDb();
 const middleware = require("../middleware/middleware");
 
 
@@ -9,6 +13,16 @@ router.get('/none',function(req,res){
   const {userId}=req.session;
   console.log(req.session);
 })
+
+
+router.get('/mongo',function(req,res){
+  dbs.createCollection("customers", function(err, res) {
+    if (err) throw err;
+    console.log("Collection created!");
+    dbs.close();
+  });
+
+});
 
 //dummy data
 router.get('/makebus',(req,res)=>{

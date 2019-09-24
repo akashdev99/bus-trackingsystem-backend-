@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser=require("body-parser");
 const methodOverride = require("method-override");
-const db= require("./config/database");
+
 const session = require('express-session')
 const flash = require('express-flash-notification');
 //to do flash notification
