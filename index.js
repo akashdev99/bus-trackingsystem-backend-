@@ -45,7 +45,10 @@ app.use((req,res,next) => {
 
 app.use("/security",security);
 app.get("*",(req,res)=>{
-    res.render("pages/error",{user:null});
+    var data=new Object();
+    data.error=null;
+    data.idf=null;
+    res.render("pages/error",{user:data});
 });
 
 
