@@ -140,7 +140,7 @@ router.get('/dashboard', middleware.checkauth, (req, res) => {
   var buses=[]
   var location=[]
   const data=res.locals.user;
-  console.log(data);
+
   var ref = db.ref("buses/");
   ref.once('value', function(snapshot){
     snapshot.forEach(function(_child){
@@ -187,8 +187,8 @@ router.get("/analytics/:id",middleware.checkauth,(req,res)=>{
   id=req.params.id;
   var ref = db.ref("buses/"+id+"/");
   ref.once('value',(snapshot)=>{
-    data=snapshot.val();
-    res.render('pages/analytics',{user:data});
+    data=snapshot.val();  
+    res.render('pages/visualize',{user:data});
     })
   })
 
@@ -243,13 +243,11 @@ router.get("/message/:id",middleware.checkauth,(req,res)=>{
   var ref = db.ref("messages/"+id+"/");
   ref.once('value',(snapshot)=>{
     data=snapshot.val();
-    console.log(data);
     res.render('pages/convo',{user:data});
     })
   })
 
 router.get("/close/:id",middleware.checkauth,(req,res)=>{
-  console.log("here")
   id=req.params.id;
   var ref = db.ref("messages/");
   ref.child(id).remove().then(res.redirect('/security/dashboard'));

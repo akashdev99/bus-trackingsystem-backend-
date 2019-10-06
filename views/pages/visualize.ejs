@@ -1,0 +1,53 @@
+<% include ../partials/header %>
+<% include ../partials/sidepanel %>
+
+<div>
+    <div id="chart_div"></div>
+    <div id="pi_chart_div"></div>
+</div>
+
+
+
+<script>
+google.charts.load('current', {packages: ['corechart', 'line']});
+google.charts.setOnLoadCallback(drawBackgroundColor);
+
+function drawBackgroundColor() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('number', 'X');
+      data.addColumn('number', 'Dogs');
+
+      data.addRows([
+        [0,7.5],   [1, 8.5],  [2, 8.0],  [3, 8.0],  [4, 7.45],  [5, 9.0],
+        [6, 7.3],  [7, 7.8],  [8, 8.7],  [9,9],  [10,7.5], [11, 7.5]
+      ]);
+
+      var options = {
+        hAxis: {
+          title: 'Time'
+        },
+        vAxis: {
+          title: 'Popularity'
+        },
+        backgroundColor: '#f1f8e9'
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+
+
+</script>
+
+
+</div>
+<!--/row-->
+<!--/card-columns-->            
+</div><!--/row-->
+
+</div>
+<!--/main col-->
+
+
+
+<% include ../partials/footer%>
