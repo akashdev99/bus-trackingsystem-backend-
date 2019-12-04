@@ -105,7 +105,7 @@ router.post('/login',function(req,res){
             
             // jwt.sign({useref},config.secret,{expiresIn:'360s'},function(err,token){  
             // });
-  
+            data.posf = useref.posf
             req.session.userID=id;
             return res.redirect('/security/dashboard');
         }else {
@@ -161,11 +161,13 @@ router.get('/dashboard/admin',middleware.admincheckauth,(req,res) =>{
       if(_child.val().posf!='chief'){
         id.push(_child.key); 
        pos.push(_child.val().posf);
+       name.push(_child.val().namef)
       }     
     })
     data.id=id;
     data.pos=pos;
-    console.log(data);
+    data.name=name;
+    console.log(data)
     res.render('pages/admin',{user:data});
   })
   
@@ -178,7 +180,7 @@ router.get('/dashboard', middleware.checkauth, (req, res) => {
   var buses=[]
   var location=[]
   const data=res.locals.user;
-
+  console.log(data)
   var ref = db.ref("buses/");
   ref.once('value', function(snapshot){
     snapshot.forEach(function(_child){

@@ -3,7 +3,9 @@ body, html {
     margin:0;
   }
 
-
+.contain{
+  margin:2 2 2 2;
+}
 
 
 .side-link{
