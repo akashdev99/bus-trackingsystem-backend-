@@ -27,7 +27,7 @@ router.get('/mongo',function(req,res){
 //dummy data
 router.get('/makebus',(req,res)=>{
   var ref = db.ref("buses/");
-  var buses=["BUS-102","BUS-103","BUS-104","BUS-105","BUS-106","BUS-107"]
+  var buses=["BUS-103","BUS-104","BUS-105","BUS-106","BUS-107"]
   buses.forEach((busid)=>{
     var newref=db.ref("buses/"+busid);
     newref.set ({   
@@ -55,17 +55,22 @@ db.r
     ref.once("value")
     .then(function(snapshot){
         if(snapshot.hasChild(id)){
+          var data=new Object();
+          data.error="That user already exists!";
+          data.idf=null;
             
-            res.render("pages/register",{user:null});
+            res.render("pages/register",{user:data});
         }
-        else{
+        else{var data=new Object();
+            data.error=null;
+            data.idf=null;
             var newref=db.ref("security/"+id);
             newref.set ({   
-           namef:name,
-           idf: id,
-           posf: pos,
-           passwordf:password
-     }).then(res.render("pages/login",{user:null}));            
+            namef:name,
+            idf: id,
+            posf: pos,
+            passwordf:password
+     }).then(res.render("pages/login",{user:data}));            
         }
     })
 });
@@ -88,29 +93,41 @@ router.post('/login',function(req,res){
     var password=req.body.password;
     //checking for user
     var ref = db.ref("security/");
-    //add error catch if user doesnt exist!!
-    ref.child(id).once('value', function(snapshot) {
-        // var exists = (snapshot.val() !== null);
-        useref=snapshot.val();
-        if(useref!=null)
-        {if (password==useref.passwordf){
-          
-          // jwt.sign({useref},config.secret,{expiresIn:'360s'},function(err,token){  
-          // });
-
-          req.session.userID=id;
-          return res.redirect('/security/dashboard');
-      }else {
-        console.log("fail");
-        data.error="Sorry !! Your username or Password is wrong :( ,Please try again!"
-        res.render("pages/login",{user:data});     
-      }}
+    ref.once("value")
+    .then(function(snapshot){
+      if(snapshot.hasChild(id)){
+        console.log("exist");
+        ref.child(id).once('value', function(snapshot) {
+          // var exists = (snapshot.val() !== null);
+          useref=snapshot.val();
+          if(useref!=null)
+          {if (password==useref.passwordf){
+            
+            // jwt.sign({useref},config.secret,{expiresIn:'360s'},function(err,token){  
+            // });
+  
+            req.session.userID=id;
+            return res.redirect('/security/dashboard');
+        }else {
+          console.log("fail");
+          data.error="Looks like your Password is wrong :( ,Please try again!"
+          res.render("pages/login",{user:data});     
+        }}
+        else{
+          console.log("server issue");
+          data.error="Sorry !! Something is wrong on our end!"
+          res.render("pages/signin",{user:data}); 
+        }       
+        });
+      }
       else{
-        console.log("server issue");
-        data.error="Sorry !! Something is wrong on out end!"
-        res.render("pages/signin",{user:data}); 
-      }       
-      });
+        console.log("doesnt exist")
+        data.error="Sorry ,That user doesnt exist :/"
+        res.render("pages/login",{user:data}); 
+      }
+    });
+
+ 
 });
 
 //render login
@@ -132,6 +149,27 @@ router.get('/logout',function(req,res){
   })
 });
 
+//get employee detials and terminate feature
+router.get('/dashboard/admin',middleware.admincheckauth,(req,res) =>{
+  const data=res.locals.user;
+  var id=[]
+  var pos=[]
+  var name=[]
+  var ref = db.ref("security/");
+  ref.once('value', function(snapshot){
+    snapshot.forEach(function(_child){
+      if(_child.val().posf!='chief'){
+        id.push(_child.key); 
+       pos.push(_child.val().posf);
+      }     
+    })
+    data.id=id;
+    data.pos=pos;
+    console.log(data);
+    res.render('pages/admin',{user:data});
+  })
+  
+});
 
 
 
@@ -160,6 +198,7 @@ router.get('/dashboard', middleware.checkauth, (req, res) => {
     var ref = db.ref("buses/"+id+"/");
     ref.once('value',(snapshot)=>{
       data=snapshot.val();
+      console.log(data)
       res.render('pages/tracker',{user:data});
       })
     })
